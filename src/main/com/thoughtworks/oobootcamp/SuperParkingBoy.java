@@ -1,22 +1,22 @@
 package com.thoughtworks.oobootcamp;
 
-import com.thoughtworks.oobootcamp.findable.MaxAvailableParkingLotFinder;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
+import com.thoughtworks.oobootcamp.findable.ParkingLotFindable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class SmartParkingBoy {
-    private final MaxAvailableParkingLotFinder maxAvailableParkingLotFinder;
+public class SuperParkingBoy {
     private List<ParkingLot> parkingLots;
+    private final ParkingLotFindable parkingLotFindable;
 
-    public SmartParkingBoy(List<ParkingLot> parkingLots) {
+    public SuperParkingBoy(List<ParkingLot> parkingLots, ParkingLotFindable findable) {
         this.parkingLots = parkingLots;
-        maxAvailableParkingLotFinder = new MaxAvailableParkingLotFinder();
+        this.parkingLotFindable = findable;
     }
 
     public Ticket park(Car car) {
-        ParkingLot parkingLot = maxAvailableParkingLotFinder.find(parkingLots);
+        ParkingLot parkingLot = parkingLotFindable.find(parkingLots);
         return parkingLot.park(car);
     }
 
