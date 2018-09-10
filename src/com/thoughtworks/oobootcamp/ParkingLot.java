@@ -25,8 +25,7 @@ public class ParkingLot {
     }
 
     public Car pickUp(Ticket ticket) {
-        boolean isTicketValid = carTickets.containsKey(ticket);
-        if(isTicketValid){
+        if(isTicketValid(ticket)){
             Car car = carTickets.get(ticket);
             carTickets.remove(ticket);
             return car;
@@ -36,5 +35,9 @@ public class ParkingLot {
 
     public int getAvailableLots() {
         return numberOfLots - carTickets.size();
+    }
+
+    public boolean isTicketValid(Ticket ticket) {
+        return carTickets.containsKey(ticket);
     }
 }
