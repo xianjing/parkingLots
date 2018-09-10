@@ -14,12 +14,17 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
+        ParkingLot parkingLot = findParkingLot();
+        return parkingLot.park(car);
+    }
+
+    private ParkingLot findParkingLot() {
         Optional<ParkingLot> first = parkingLots.stream().filter(lot -> lot.getAvailableLots() > 0).findFirst();
-        if(first.isPresent()){
-            ParkingLot parkingLot = first.get();
-            return parkingLot.park(car);
+
+        if (!first.isPresent()) {
+            throw new ParkingLotIsFullException();
         }
-        throw new ParkingLotIsFullException();
+        return first.get();
     }
 
     public Car pickUp(Ticket ticket) {
