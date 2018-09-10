@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ParkingLot {
-    private int numberOfLots;
+    private int capacity;
     private HashMap<Ticket,Car> carTickets = new HashMap<>();
 
-    public ParkingLot(int numberOfLots) {
-        this.numberOfLots = numberOfLots;
+    public ParkingLot(int capacity) {
+        this.capacity = capacity;
     }
 
     public Ticket park(Car car) {
@@ -34,10 +34,14 @@ public class ParkingLot {
     }
 
     public int getAvailableLots() {
-        return numberOfLots - carTickets.size();
+        return capacity - carTickets.size();
     }
 
     public boolean isTicketValid(Ticket ticket) {
         return carTickets.containsKey(ticket);
+    }
+
+    public double getVacancyRate() {
+        return Math.round(((double) getAvailableLots() / (double) capacity) * 100) * 0.01;
     }
 }

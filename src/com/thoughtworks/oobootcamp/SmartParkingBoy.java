@@ -1,33 +1,23 @@
 package com.thoughtworks.oobootcamp;
 
-import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
+import com.thoughtworks.oobootcamp.findable.MaxAvailableParkingLotFinder;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 public class SmartParkingBoy {
+    private final MaxAvailableParkingLotFinder maxAvailableParkingLotFinder;
     private List<ParkingLot> parkingLots;
 
     public SmartParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
+        maxAvailableParkingLotFinder = new MaxAvailableParkingLotFinder();
     }
 
     public Ticket park(Car car) {
-        ParkingLot parkingLot = findParkingLot();
+        ParkingLot parkingLot = maxAvailableParkingLotFinder.find(parkingLots);
         return parkingLot.park(car);
-    }
-
-    private ParkingLot findParkingLot() {
-        Optional<ParkingLot> first = parkingLots.stream()
-                                                .filter(lot -> lot.getAvailableLots() > 0)
-                                                .sorted(Comparator.comparingInt(ParkingLot::getAvailableLots).reversed())
-                                                .findFirst();
-        if (!first.isPresent()) {
-            throw new ParkingLotIsFullException();
-        }
-        return first.get();
     }
 
     public Car pickUp(Ticket ticket) {
