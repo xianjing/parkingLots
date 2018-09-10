@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,10 +26,12 @@ public class ParkingBoyTest {
 
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
+        assertEquals(9, firstParkingLot.getAvailableLots());
 
         Car actualCar = firstParkingLot.pickUp(ticket);
-
         assertSame(expectedCar,actualCar);
+
+        assertEquals(10, secondParkingLot.getAvailableLots());
     }
 
     @Test
