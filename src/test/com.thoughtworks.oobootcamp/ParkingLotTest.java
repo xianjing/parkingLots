@@ -1,11 +1,8 @@
 package com.thoughtworks.oobootcamp;
 
 import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
-import com.thoughtworks.oobootcamp.Ticket;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,10 +14,10 @@ public class ParkingLotTest {
     @Test
     public void should_park_succeed_given_available_lots(){
         //given
-        ParkingLot parkingLot = new ParkingLot(1);
+        Parkable parkable = new ParkingLot(1);
 
         //when
-        Ticket ticket = parkingLot.park(new Car());
+        Ticket ticket = parkable.park(new Car());
 
         //then
         assertNotNull(ticket);
@@ -29,22 +26,22 @@ public class ParkingLotTest {
     @Test
     public void should_failed_given_lots_is_full(){
         //given
-        ParkingLot parkingLot = new ParkingLot(1);
+        Parkable parkable = new ParkingLot(1);
         Car expectedCar = new Car();
-        Ticket ticket = parkingLot.park(expectedCar);
+        Ticket ticket = parkable.park(expectedCar);
 
-        assertThrows(ParkingLotIsFullException.class, ()-> parkingLot.park(new Car()));
+        assertThrows(ParkingLotIsFullException.class, ()-> parkable.park(new Car()));
     }
 
     @Test
     public void should_pickup_right_car_given_a_ticket(){
         //given
-        ParkingLot parkingLot = new ParkingLot(1);
+        Parkable parkable = new ParkingLot(1);
         Car expectedCar = new Car();
-        Ticket ticket = parkingLot.park(expectedCar);
+        Ticket ticket = parkable.park(expectedCar);
 
         //when pickup
-        Car actualCar = parkingLot.pickUp(ticket);
+        Car actualCar = parkable.pickUp(ticket);
 
         //then
         assertEquals(expectedCar,actualCar);
@@ -53,25 +50,25 @@ public class ParkingLotTest {
     @Test
     public void should_failed_given_an_invalid_ticket(){
         assertThrows(TicketIsInvalidException.class, () -> {
-            ParkingLot parkingLot = new ParkingLot(1);
-            parkingLot.pickUp(new Ticket());
+            Parkable parkable = new ParkingLot(1);
+            parkable.pickUp(new Ticket());
         });
     }
 
     @Test
     public void should_return_available_lots(){
-        ParkingLot parkingLot = new ParkingLot(10);
-        parkingLot.park(new Car());
+        Parkable parkable = new ParkingLot(10);
+        parkable.park(new Car());
 
-        int availableLots = parkingLot.getAvailableLots();
+        int availableLots = parkable.getAvailableLots();
         assertEquals(9, availableLots);
     }
 
     @Test
     public void should_return_vailable_lots(){
-        ParkingLot parkingLot = new ParkingLot(10);
-        parkingLot.pickUp(parkingLot.park(new Car()));
-        int availableLots = parkingLot.getAvailableLots();
+        Parkable parkable = new ParkingLot(10);
+        parkable.pickUp(parkable.park(new Car()));
+        int availableLots = parkable.getAvailableLots();
         assertEquals(10, availableLots);
 
     }

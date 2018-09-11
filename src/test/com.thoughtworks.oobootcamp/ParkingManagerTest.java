@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,10 +19,15 @@ public class ParkingManagerTest {
 
         ParkingLot parkingBoyFirstLot = new ParkingLot(1);
         List<ParkingLot> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
-        List<ParkingBoy> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
-        ParkingLot parkingManagerLot = new ParkingLot(1);
-        List<ParkingLot> parkingManagerLots = Arrays.asList(parkingManagerLot);
-        ParkingManager parkingManager = new ParkingManager(parkingBoys, parkingManagerLots);
+        List<Parkable> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
+
+
+        Parkable parkingManagerLot = new ParkingLot(1);
+        List<Parkable> parkingManagerLots = Arrays.asList(parkingManagerLot);
+        List<Parkable> parkables = Stream.concat(parkingBoys.stream(), parkingManagerLots.stream()).collect(Collectors.toList());
+
+
+        ParkingManager parkingManager = new ParkingManager(parkables);
         Ticket ticket = parkingManager.park(new Car());
 
         assertNotNull(ticket);
@@ -33,10 +40,11 @@ public class ParkingManagerTest {
 
         ParkingLot parkingBoyFirstLot = new ParkingLot(1);
         List<ParkingLot> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
-        List<ParkingBoy> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
-        ParkingLot parkingManagerLot = new ParkingLot(1);
-        List<ParkingLot> parkingManagerLots = Arrays.asList(parkingManagerLot);
-        ParkingManager parkingManager = new ParkingManager(parkingBoys, parkingManagerLots);
+        List<Parkable> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
+        Parkable parkingManagerLot = new ParkingLot(1);
+        List<Parkable> parkingManagerLots = Arrays.asList(parkingManagerLot);
+        List<Parkable> parkables = Stream.concat(parkingBoys.stream(), parkingManagerLots.stream()).collect(Collectors.toList());
+        ParkingManager parkingManager = new ParkingManager(parkables);
         Car expectedCar = new Car();
         Ticket ticket = parkingManager.park(expectedCar);
 

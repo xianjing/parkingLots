@@ -8,31 +8,35 @@ import java.util.Optional;
 
 public class ParkingBoy implements Parkable{
     private final ParkingLotFindable parkingLotFindable;
-    private List<ParkingLot> parkingLots;
+    private List<ParkingLot> parkables;
 
-    public ParkingBoy(List<ParkingLot> parkingLots, ParkingLotFindable parkingLotFindable) {
-        this.parkingLots = parkingLots;
+    public ParkingBoy(List<ParkingLot> parkables, ParkingLotFindable parkingLotFindable) {
+        this.parkables = parkables;
         this.parkingLotFindable = parkingLotFindable;
     }
 
+    @Override
     public Ticket park(Car car) {
-        ParkingLot parkingLot = parkingLotFindable.find(parkingLots);
-        return parkingLot.park(car);
+        Parkable parkable = parkingLotFindable.find(parkables);
+        return parkable.park(car);
     }
 
+    @Override
     public Car pickUp(Ticket ticket) {
-        Optional<ParkingLot> first = parkingLots.stream().filter(lot -> lot.isTicketValid(ticket)).findFirst();
+        Optional<ParkingLot> first = parkables.stream().filter(lot -> lot.isTicketValid(ticket)).findFirst();
         if(first.isPresent()){
             return first.get().pickUp(ticket);
         }
         throw new TicketIsInvalidException();
     }
 
+    @Override
     public int getAvailableLots() {
-        return parkingLots.stream().mapToInt(x->x.getAvailableLots()).sum();
+        return parkables.stream().mapToInt(x->x.getAvailableLots()).sum();
     }
 
+    @Override
     public boolean isTicketValid(Ticket ticket) {
-        return parkingLots.stream().anyMatch(x->x.isTicketValid(ticket));
+        return parkables.stream().anyMatch(x->x.isTicketValid(ticket));
     }
 }

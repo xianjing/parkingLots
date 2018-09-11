@@ -1,5 +1,6 @@
 package com.thoughtworks.oobootcamp.findable;
 
+import com.thoughtworks.oobootcamp.Parkable;
 import com.thoughtworks.oobootcamp.ParkingLot;
 import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
 
@@ -9,10 +10,10 @@ import java.util.Optional;
 
 public class MaxAvailableParkingLotFinder implements ParkingLotFindable {
     @Override
-    public ParkingLot find(List<ParkingLot> parkingLots) {
-        Optional<ParkingLot> first = parkingLots.stream()
+    public Parkable find(List<ParkingLot> parkables) {
+        Optional<ParkingLot> first = parkables.stream()
                                                 .filter(lot -> lot.getAvailableLots() > 0)
-                                                .max(Comparator.comparing(ParkingLot::getAvailableLots));
+                                                .max(Comparator.comparing(Parkable::getAvailableLots));
         if (!first.isPresent()) {
             throw new ParkingLotIsFullException();
         }
