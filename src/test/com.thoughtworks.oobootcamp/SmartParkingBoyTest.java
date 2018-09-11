@@ -24,7 +24,7 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(10);
         parkingLots.add(secondParkingLot);
 
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
 
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
@@ -44,7 +44,7 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(1);
         parkingLots.add(secondParkingLot);
 
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
         parkingBoy.park(new Car());
         parkingBoy.park(new Car());
 
@@ -61,7 +61,7 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(10);
         parkingLots.add(secondParkingLot);
 
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
 
@@ -83,10 +83,10 @@ public class SmartParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(1);
         parkingLots.add(secondParkingLot);
 
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxAvailableParkingLotFinder());
 
         //when
-        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket(UUID.randomUUID())));
+        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket()));
 
     }
 }

@@ -103,7 +103,7 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new OrderedParkingLotFinder());
 
         //when
-        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket(UUID.randomUUID())));
+        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket()));
 
     }
 

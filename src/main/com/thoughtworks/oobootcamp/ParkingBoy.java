@@ -27,4 +27,8 @@ public class ParkingBoy {
         }
         throw new TicketIsInvalidException();
     }
+
+    public int getAvailableLots() {
+        return parkingLots.stream().mapToInt(x->x.getAvailableLots()).sum();
+    }
 }

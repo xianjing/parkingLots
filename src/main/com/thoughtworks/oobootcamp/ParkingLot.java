@@ -17,7 +17,7 @@ public class ParkingLot {
     public Ticket park(Car car) {
         boolean hasAvailableLots = getAvailableLots() > 0;
         if(hasAvailableLots){
-            Ticket ticket = new Ticket(UUID.randomUUID());
+            Ticket ticket = new Ticket();
             carTickets.put(ticket,car);
             return ticket;
         }

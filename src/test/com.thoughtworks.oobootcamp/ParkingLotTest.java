@@ -54,7 +54,7 @@ public class ParkingLotTest {
     public void should_failed_given_an_invalid_ticket(){
         assertThrows(TicketIsInvalidException.class, () -> {
             ParkingLot parkingLot = new ParkingLot(1);
-            parkingLot.pickUp(new Ticket(UUID.randomUUID()));
+            parkingLot.pickUp(new Ticket());
         });
     }
 

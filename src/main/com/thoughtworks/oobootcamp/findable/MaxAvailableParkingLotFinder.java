@@ -12,8 +12,7 @@ public class MaxAvailableParkingLotFinder implements ParkingLotFindable {
     public ParkingLot find(List<ParkingLot> parkingLots) {
         Optional<ParkingLot> first = parkingLots.stream()
                                                 .filter(lot -> lot.getAvailableLots() > 0)
-                                                .sorted(Comparator.comparingInt(ParkingLot::getAvailableLots).reversed())
-                                                .findFirst();
+                                                .max(Comparator.comparing(ParkingLot::getAvailableLots));
         if (!first.isPresent()) {
             throw new ParkingLotIsFullException();
         }

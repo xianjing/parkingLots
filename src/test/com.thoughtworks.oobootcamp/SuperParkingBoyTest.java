@@ -27,7 +27,7 @@ public class SuperParkingBoyTest {
         secondParkingLot.park(new Car());
         secondParkingLot.park(new Car());
 
-        SuperParkingBoy parkingBoy = new SuperParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
 
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
@@ -48,7 +48,7 @@ public class SuperParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(1);
         parkingLots.add(secondParkingLot);
 
-        SuperParkingBoy parkingBoy = new SuperParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
         parkingBoy.park(new Car());
         parkingBoy.park(new Car());
 
@@ -67,7 +67,7 @@ public class SuperParkingBoyTest {
         parkingLots.add(secondParkingLot);
         secondParkingLot.park(new Car());
 
-        SuperParkingBoy parkingBoy = new SuperParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
         assertEquals(0, firstParkingLot.getAvailableLots());
@@ -90,10 +90,10 @@ public class SuperParkingBoyTest {
         ParkingLot secondParkingLot = new ParkingLot(1);
         parkingLots.add(secondParkingLot);
 
-        SuperParkingBoy parkingBoy = new SuperParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, new MaxVacancyRateParkingLotFinder());
 
         //when
-        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket(UUID.randomUUID())));
+        assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket()));
 
     }
 }
