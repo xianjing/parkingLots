@@ -6,7 +6,7 @@ import com.thoughtworks.oobootcamp.findable.ParkingLotFindable;
 import java.util.List;
 import java.util.Optional;
 
-public class ParkingBoy {
+public class ParkingBoy implements Parkable{
     private final ParkingLotFindable parkingLotFindable;
     private List<ParkingLot> parkingLots;
 
@@ -30,5 +30,9 @@ public class ParkingBoy {
 
     public int getAvailableLots() {
         return parkingLots.stream().mapToInt(x->x.getAvailableLots()).sum();
+    }
+
+    public boolean isTicketValid(Ticket ticket) {
+        return parkingLots.stream().anyMatch(x->x.isTicketValid(ticket));
     }
 }

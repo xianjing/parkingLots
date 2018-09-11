@@ -4,9 +4,8 @@ import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
 
 import java.util.HashMap;
-import java.util.UUID;
 
-public class ParkingLot {
+public class ParkingLot implements Parkable {
     private int capacity;
     private HashMap<Ticket,Car> carTickets = new HashMap<>();
 
@@ -14,6 +13,7 @@ public class ParkingLot {
         this.capacity = capacity;
     }
 
+    @Override
     public Ticket park(Car car) {
         boolean hasAvailableLots = getAvailableLots() > 0;
         if(hasAvailableLots){
