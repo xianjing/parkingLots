@@ -1,6 +1,6 @@
 package com.thoughtworks.oobootcamp;
 
-import com.thoughtworks.oobootcamp.findable.OrderedParkingLotFinder;
+import com.thoughtworks.oobootcamp.strategy.OrderedParkingLotFinder;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -17,8 +17,8 @@ public class ParkingManagerTest {
     @Test
     public void should_park_success(){
 
-        ParkingLot parkingBoyFirstLot = new ParkingLot(1);
-        List<ParkingLot> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
+        Parkable parkingBoyFirstLot = new ParkingLot(1);
+        List<Parkable> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
         List<Parkable> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
 
 
@@ -27,7 +27,7 @@ public class ParkingManagerTest {
         List<Parkable> parkables = Stream.concat(parkingBoys.stream(), parkingManagerLots.stream()).collect(Collectors.toList());
 
 
-        ParkingManager parkingManager = new ParkingManager(parkables);
+        Parkable parkingManager = new ParkingBoy(parkables, new OrderedParkingLotFinder());
         Ticket ticket = parkingManager.park(new Car());
 
         assertNotNull(ticket);
@@ -38,13 +38,13 @@ public class ParkingManagerTest {
     @Test
     public void should_pickup_success(){
 
-        ParkingLot parkingBoyFirstLot = new ParkingLot(1);
-        List<ParkingLot> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
+        Parkable parkingBoyFirstLot = new ParkingLot(1);
+        List<Parkable> parkingBoyLots = Arrays.asList(parkingBoyFirstLot);
         List<Parkable> parkingBoys = Arrays.asList(new ParkingBoy(parkingBoyLots, new OrderedParkingLotFinder()));
         Parkable parkingManagerLot = new ParkingLot(1);
         List<Parkable> parkingManagerLots = Arrays.asList(parkingManagerLot);
         List<Parkable> parkables = Stream.concat(parkingBoys.stream(), parkingManagerLots.stream()).collect(Collectors.toList());
-        ParkingManager parkingManager = new ParkingManager(parkables);
+        Parkable parkingManager = new ParkingBoy(parkables, new OrderedParkingLotFinder());
         Car expectedCar = new Car();
         Ticket ticket = parkingManager.park(expectedCar);
 

@@ -8,4 +8,8 @@ public interface Parkable {
     int getAvailableLots();
 
     boolean isTicketValid(Ticket ticket);
+
+    double getVacancyRate();
+
+    int getCapacity();
 }

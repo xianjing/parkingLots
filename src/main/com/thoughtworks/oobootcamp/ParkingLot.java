@@ -26,9 +26,7 @@ public class ParkingLot implements Parkable {
 
     public Car pickUp(Ticket ticket) {
         if(isTicketValid(ticket)){
-            Car car = carTickets.get(ticket);
-            carTickets.remove(ticket);
-            return car;
+            return carTickets.remove(ticket);
         }
         throw new TicketIsInvalidException();
     }
@@ -41,7 +39,13 @@ public class ParkingLot implements Parkable {
         return carTickets.containsKey(ticket);
     }
 
+    @Override
     public double getVacancyRate() {
         return Math.round(((double) getAvailableLots() / (double) capacity) * 100) * 0.01;
+    }
+
+    @Override
+    public int getCapacity(){
+        return capacity;
     }
 }

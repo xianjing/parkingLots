@@ -2,7 +2,7 @@ package com.thoughtworks.oobootcamp;
 
 import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
-import com.thoughtworks.oobootcamp.findable.MaxVacancyRateParkingLotFinder;
+import com.thoughtworks.oobootcamp.strategy.MaxVacancyRateParkingLotFinder;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,11 +17,11 @@ public class SuperParkingBoyTest {
     @Test
     public void should_park_to_second_lot() {
         //given
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(6);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(6);
         parkables.add(firstParkable);
         firstParkable.park(new Car());
-        ParkingLot secondParkable = new ParkingLot(8);
+        Parkable secondParkable = new ParkingLot(8);
         parkables.add(secondParkable);
         secondParkable.park(new Car());
         secondParkable.park(new Car());
@@ -41,10 +41,10 @@ public class SuperParkingBoyTest {
     @Test
     public void should_park_failed() {
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-        ParkingLot secondParkable = new ParkingLot(1);
+        Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
         ParkingBoy parkingBoy = new ParkingBoy(parkables, new MaxVacancyRateParkingLotFinder());
@@ -58,11 +58,11 @@ public class SuperParkingBoyTest {
     @Test
     public void should_pickup_right_car_given_right_ticket(){
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
 
-        ParkingLot secondParkable = new ParkingLot(10);
+        Parkable secondParkable = new ParkingLot(10);
         parkables.add(secondParkable);
         secondParkable.park(new Car());
 
@@ -83,10 +83,10 @@ public class SuperParkingBoyTest {
     @Test
     public void should_pickup_failed_given_invalid_ticket(){
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-        ParkingLot secondParkable = new ParkingLot(1);
+        Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
         Parkable parkingBoy = new ParkingBoy(parkables, new MaxVacancyRateParkingLotFinder());

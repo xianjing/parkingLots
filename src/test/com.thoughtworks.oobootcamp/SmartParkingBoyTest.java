@@ -2,7 +2,7 @@ package com.thoughtworks.oobootcamp;
 
 import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
-import com.thoughtworks.oobootcamp.findable.MaxAvailableParkingLotFinder;
+import com.thoughtworks.oobootcamp.strategy.MaxAvailableParkingLotFinder;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ public class SmartParkingBoyTest {
     @Test
     public void should_park_to_second_lot() {
         //given
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-        ParkingLot secondParkable = new ParkingLot(10);
+        Parkable secondParkable = new ParkingLot(10);
         parkables.add(secondParkable);
 
         Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
@@ -37,10 +37,10 @@ public class SmartParkingBoyTest {
     @Test
     public void should_park_failed() {
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-        ParkingLot secondParkable = new ParkingLot(1);
+        Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
         Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
@@ -54,11 +54,11 @@ public class SmartParkingBoyTest {
     @Test
     public void should_pickup_right_car_given_right_ticket(){
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
 
-        ParkingLot secondParkable = new ParkingLot(10);
+        Parkable secondParkable = new ParkingLot(10);
         parkables.add(secondParkable);
 
         Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
@@ -78,10 +78,10 @@ public class SmartParkingBoyTest {
     public void should_pickup_failed_given_invalid_ticket(){
 
         //given full
-        List<ParkingLot> parkables = new ArrayList<>();
-        ParkingLot firstParkable = new ParkingLot(1);
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-        ParkingLot secondParkable = new ParkingLot(1);
+        Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
         Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
