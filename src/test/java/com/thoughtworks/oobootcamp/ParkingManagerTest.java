@@ -1,16 +1,15 @@
 package com.thoughtworks.oobootcamp;
 
-import com.thoughtworks.oobootcamp.strategy.OrderedParkingLotFinder;
+import com.thoughtworks.oobootcamp.*;
 import org.junit.jupiter.api.Test;
 
+import com.thoughtworks.oobootcamp.strategy.OrderedParkingLotFinder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingManagerTest {
 

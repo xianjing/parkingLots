@@ -1,16 +1,15 @@
 package com.thoughtworks.oobootcamp;
 
+import com.thoughtworks.oobootcamp.*;
+import org.junit.jupiter.api.Test;
+
 import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
 import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
 import com.thoughtworks.oobootcamp.strategy.MaxVacancyRateParkingLotFinder;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SuperParkingBoyTest {
 

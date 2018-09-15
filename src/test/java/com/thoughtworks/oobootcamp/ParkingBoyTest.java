@@ -1,41 +1,60 @@
 package com.thoughtworks.oobootcamp;
 
-import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
-import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
-import com.thoughtworks.oobootcamp.strategy.MaxAvailableParkingLotFinder;
+import com.thoughtworks.oobootcamp.*;
 import org.junit.jupiter.api.Test;
 
+import com.thoughtworks.oobootcamp.exception.ParkingLotIsFullException;
+import com.thoughtworks.oobootcamp.exception.TicketIsInvalidException;
+import com.thoughtworks.oobootcamp.strategy.OrderedParkingLotFinder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SmartParkingBoyTest {
+public class ParkingBoyTest {
 
     @Test
-    public void should_park_to_second_lot() {
+    public void should_park_into_first_lot_given_lots_is_available(){
         //given
         List<Parkable> parkables = new ArrayList<>();
-        Parkable firstParkable = new ParkingLot(1);
+        Parkable firstParkable = new ParkingLot(10);
         parkables.add(firstParkable);
         Parkable secondParkable = new ParkingLot(10);
         parkables.add(secondParkable);
 
-        Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
+        Parkable parkingBoy = new ParkingBoy(parkables, new OrderedParkingLotFinder());
+
+        Car expectedCar = new Car();
+        Ticket ticket = parkingBoy.park(expectedCar);
+        assertEquals(9, firstParkable.getAvailableLots());
+
+        Car actualCar = firstParkable.pickUp(ticket);
+        assertSame(expectedCar,actualCar);
+
+        assertEquals(10, secondParkable.getAvailableLots());
+    }
+
+    @Test
+    public void should_park_into_second_lot_given_first_is_full(){
+        //given
+        List<Parkable> parkables = new ArrayList<>();
+        Parkable firstParkable = new ParkingLot(0);
+        parkables.add(firstParkable);
+        Parkable secondParkable = new ParkingLot(10);
+        parkables.add(secondParkable);
+
+        Parkable parkingBoy = new ParkingBoy(parkables, new OrderedParkingLotFinder());
 
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
 
-        assertEquals(1, firstParkable.getAvailableLots());
-        assertEquals(9, secondParkable.getAvailableLots());
         Car actualCar = secondParkable.pickUp(ticket);
-        assertSame(expectedCar, actualCar);
+
+        assertSame(expectedCar,actualCar);
     }
 
     @Test
-    public void should_park_failed() {
+    public void should_failed_when_all_lots_are_full(){
         //given full
         List<Parkable> parkables = new ArrayList<>();
         Parkable firstParkable = new ParkingLot(1);
@@ -43,7 +62,7 @@ public class SmartParkingBoyTest {
         Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
-        Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkables, new OrderedParkingLotFinder());
         parkingBoy.park(new Car());
         parkingBoy.park(new Car());
 
@@ -57,11 +76,10 @@ public class SmartParkingBoyTest {
         List<Parkable> parkables = new ArrayList<>();
         Parkable firstParkable = new ParkingLot(1);
         parkables.add(firstParkable);
-
-        Parkable secondParkable = new ParkingLot(10);
+        Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
-        Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
+        ParkingBoy parkingBoy = new ParkingBoy(parkables, new OrderedParkingLotFinder());
         Car expectedCar = new Car();
         Ticket ticket = parkingBoy.park(expectedCar);
 
@@ -70,13 +88,10 @@ public class SmartParkingBoyTest {
 
         //then
         assertSame(expectedCar,actualCar);
-        assertEquals(1, firstParkable.getAvailableLots());
-        assertEquals(10, secondParkable.getAvailableLots());
     }
 
     @Test
     public void should_pickup_failed_given_invalid_ticket(){
-
         //given full
         List<Parkable> parkables = new ArrayList<>();
         Parkable firstParkable = new ParkingLot(1);
@@ -84,10 +99,11 @@ public class SmartParkingBoyTest {
         Parkable secondParkable = new ParkingLot(1);
         parkables.add(secondParkable);
 
-        Parkable parkingBoy = new ParkingBoy(parkables, new MaxAvailableParkingLotFinder());
+        Parkable parkingBoy = new ParkingBoy(parkables, new OrderedParkingLotFinder());
 
         //when
         assertThrows(TicketIsInvalidException.class,() -> parkingBoy.pickUp(new Ticket()));
 
     }
+
 }
